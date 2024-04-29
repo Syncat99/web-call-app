@@ -1,0 +1,16 @@
+{
+  "name": "web-call-app",
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "sh ./run.sh npm run dev",
+    "build": "sh ./run.sh npm run build",
+    "start": "sh ./run.sh npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
