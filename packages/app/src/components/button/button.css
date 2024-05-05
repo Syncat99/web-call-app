@@ -1,0 +1,16 @@
+.btn {
+  border-radius: 5px;
+  height: 30px;
+  border: none;
+  outline: none;
+}
+
+.btn-gray {
+  background-color: rgb(94, 94, 94);
+  color: white;
+}
+
+.btn-purple {
+  background-color: rgb(70, 39, 143);
+  color: white;
+}

@@ -7,16 +7,15 @@
   "scripts": {
     "dev": "sh ./run.sh npm run dev",
     "build": "sh ./run.sh npm run build",
-    "start": "sh ./run.sh npm run start"
+    "start": "sh ./run.sh npm run start",
+    "prettier": "npx prettier --write ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "react-router-dom": "^6.23.0"
+    "concurrently": "^8.2.2",
+    "prettier": "3.2.5"
   }
 }

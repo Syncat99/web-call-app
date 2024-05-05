@@ -1,0 +1,10 @@
+.signup {
+  margin: 20px auto;
+  width: 250px;
+}
+.signup * {
+  width: 250px;
+  border: none;
+  outline: none;
+  height: 30px;
+}
