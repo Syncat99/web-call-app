@@ -6,25 +6,35 @@ import { useState } from "react";
 import "./login.css";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState({
+    username: "",
+    password: ""
+  });
 
-  return (
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setUserData(previous => ({
+      ...previous,
+      [name]: value
+    }));
+  }
+  
+    return (
     <div className="login">
       <AuthLayout>
         <Input
           type="text"
           name="usernameIn"
           placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          value={userData.username}
+          onChange={handleChange}
         />
         <Input
           type="password"
           name="passwordIn"
           placeholder="Password"
-          value={password}
-          setValue={setPassword}
+          value={userData.password}
+          onChange={handleChange}
         />
         <Button type="submit">Log in</Button>
       </AuthLayout>
