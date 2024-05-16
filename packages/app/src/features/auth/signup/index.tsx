@@ -30,13 +30,24 @@ function Registration() {
       [name]: value
     }));
   }
-  const sign = async (data: RegistrationProps) => {
-    const res = await axios.post("http://localhost:3500/api/createUser", data)
+  const register = async (data: RegistrationProps) => {
+    if (userData.password !== userData.confirmPassword || userData.password === "" || userData.confirmPassword === "") {
+      console.log("Re-enter password")
+      return
+    }
+    else if (userData.email === "" || userData.username === "" || userData.name === "") {
+      console.log("Please fill out all the fields")
+      return
+    }
+    const res = await axios.post("http://localhost:3500/api/createUser", {
+      username: data.username,
+      email: data.email,
+      name: data.name,
+      password: data.password
+    })
     console.log(res.data)
   }
-  console.log("email "+userData.email)
-  console.log("name "+userData.name)
-  console.log("username "+userData.username)
+  console.log(Object.values(userData))
   return (
     <AuthLayout className="signup">
       <Input
@@ -64,7 +75,14 @@ function Registration() {
         value={userData.password}
         onChange={handleChange}
       />
-      <Button variant="purple" onClick={() => sign(userData)}>Sign Up</Button>
+      <Input
+        name="confirmPassword"
+        type="password"
+        placeholder="Confirm password"
+        value={userData.confirmPassword}
+        onChange={handleChange}
+      />
+      <Button variant="purple" onClick={() => register(userData)}>Sign Up</Button>
     </AuthLayout>
   );
 }

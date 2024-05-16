@@ -7,16 +7,38 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post('/api/createUser', (req: Request, res: Response) => {
-    res.send("received");
+app.post('/api/createUser', async (req: Request, res: Response) => {
     console.log(req.body.email)
-    prisma.user.deleteMany({})
     try {
-        prisma.user.deleteMany({})
-        // prisma.user.create(req.body)
-        console.log("success")
-    } catch (err) {
-        console.log(err)
+        const newUser = await prisma.user.create({
+            data: {
+              email: req.body.email,
+              name: req.body.name,
+              username: req.body.username,
+              password: req.body.password
+            },
+          });
+        res.status(200).send("user created");
+    }
+    catch (err) {
+        res.status(404).send("user not created");
+    }
+})
+app.get('/api/connect', async (req: Request, res: Response) => {
+    try {
+        const userConnect = await prisma.user.findUnique({
+            where : {
+                username: req.body.username,
+                password: req.body.password
+            }
+        })
+        if (userConnect) {
+            res.status(200).send(1);
+        }
+    }
+    catch (err) {
+        res.send("not found");
+        console.log(err);
     }
 })
 
