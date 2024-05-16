@@ -2,7 +2,7 @@ import "./input.css";
 import { Dispatch, InputHTMLAttributes, SetStateAction } from "react";
 
 export default function Input({
-  value = "",
+  value= "",
   className,
   onChange,
   ...props

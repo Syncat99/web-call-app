@@ -31,14 +31,16 @@ function Registration() {
     }));
   }
   const register = async (data: RegistrationProps) => {
-    if (userData.password !== userData.confirmPassword || userData.password === "" || userData.confirmPassword === "") {
+    if (!Object.values(userData).reduce((acc, val) => acc && !!val, true)) {
+      console.log("Fill each field accordingly")
+      return
+    }
+
+    if (userData.password !== userData.confirmPassword) {
       console.log("Re-enter password")
       return
     }
-    else if (userData.email === "" || userData.username === "" || userData.name === "") {
-      console.log("Please fill out all the fields")
-      return
-    }
+
     const res = await axios.post("http://localhost:3500/api/createUser", {
       username: data.username,
       email: data.email,
