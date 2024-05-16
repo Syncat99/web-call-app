@@ -3,6 +3,7 @@
   height: 30px;
   border: none;
   outline: none;
+  align-content: center;
 }
 
 .btn-gray {
@@ -13,4 +14,20 @@
 .btn-purple {
   background-color: rgb(70, 39, 143);
   color: white;
+}
+
+.join {
+  color: white;
+  height: 50px;
+  width: 200px;
+  background-color: #FC766AFF;
+  font-size: 20px;
+}
+
+.mnb-1 {
+    background-color: transparent;
+    font-size: 25px;
+    font-weight: 400;
+    padding: 10px 10px;
+    height: initial;
 }
