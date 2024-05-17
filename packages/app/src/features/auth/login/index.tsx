@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import Input from "../../../components/input";
 import Button from "../../../components/button";
 import AuthLayout from "../layout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./login.css";
 import axios from "axios";
+import { useData } from "../../../context/dataContext";
 
 export interface loginProps {
   username: string;
@@ -16,14 +17,25 @@ function Login() {
     username: "",
     password: ""
   });
-  console.log(userData.username)
+  const {loggedIn, setLoggedIn} = useData()
+
+  useEffect(() => {
+    setLoggedIn(false);
+  }, [setLoggedIn]);
+
   const login = async (data: loginProps) => {
     const loginResult = await axios.post("http://localhost:3500/api/connect", {
       params: {
         username: data.username,
         password: data.password
       }})
-    console.log(loginResult.data)
+    if ((loginResult.data) === "correct") {
+      setLoggedIn(true)
+    }
+    else {
+      setLoggedIn(false);
+      setUserData(previous => ({...previous, password: ""}))
+    }
   }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -34,9 +46,9 @@ function Login() {
   }
   
     return (
-    <div className="login">
-      <AuthLayout>
+      <AuthLayout className="loginForm">
         <Input
+          className="login"
           type="text"
           name="username"
           placeholder="Username"
@@ -44,6 +56,7 @@ function Login() {
           onChange={handleChange}
         />
         <Input
+          className="login"
           type="password"
           name="password"
           placeholder="Password"
@@ -51,13 +64,11 @@ function Login() {
           onChange={handleChange}
         />
         <Button type="submit" onClick={() => {login(userData)}}>Log in</Button>
-      </AuthLayout>
-      <div className="auth-registration">
         <Link to="/register">
           <Button variant="purple">Sign Up</Button>
         </Link>
-      </div>
-    </div>
+      </AuthLayout>
+        
   );
 }
 

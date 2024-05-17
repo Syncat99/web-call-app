@@ -1,11 +1,9 @@
 import Button from "../../../components/button";
 import Input from "../../../components/input";
-import Logo from "../../../components/logo";
 import AuthLayout from "../layout";
 import "./signup.css";
 import { useState } from "react";
 import axios from "axios"
-
 export interface RegistrationProps {
     email: string;
     name: string;

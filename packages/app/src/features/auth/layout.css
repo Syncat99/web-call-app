@@ -1,0 +1,41 @@
+.layoutLogo {
+    display: flex;
+    margin: 10px 0;
+    align-items: center;
+    position: relative;
+}
+
+.layoutLogo a {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: absolute;
+    left: 0px;
+    top: 10px;
+    /* transform: translateY(-25%); */
+    width: fit-content;
+    /* z-index: 10; */
+}
+.layoutLogo a svg {
+    width: fit-content;
+}
+
+.auth-layout {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 0 15px 15px 15px;
+    gap: 10px;
+    /* border: 1px solid rgb(200, 200, 200); */
+    text-align: center;
+    scale: 1.5;
+    /* background-color: rgba(77, 77, 77, 0.822); */
+    width: min-content;
+  
+  }
+  
+  .auth-layout * {
+    height: 30px;
+    border: none;
+    outline: none;
+  }

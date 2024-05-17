@@ -21,7 +21,7 @@ app.post('/api/createUser', async (req: Request, res: Response) => {
             },
           });
         console.log(req.body.password+": "+ hashed)
-        res.status(200).send("user created");
+        res.status(201).send("user created");
     }
     catch (err) {
         res.status(404).send("user not created");
@@ -40,7 +40,7 @@ app.post('/api/connect', async (req: Request, res: Response) => {
             res.send("Invalid username or user does not exist")
             return
         }
-        const compare = await bcrypt.compare(password, userConnect!.password)
+        const compare = await bcrypt.compare(password, userConnect.password)
         if (compare) {
             res.send("correct")
         }

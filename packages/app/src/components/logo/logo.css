@@ -1,4 +1,6 @@
 .logo {
   text-decoration: none;
-  color: black;
+  color: rgb(255, 255, 255);
+  position: relative;
+  /* width: fit-content; */
 }
