@@ -6,11 +6,13 @@ import { useState, useEffect } from "react";
 import "./login.css";
 import axios from "axios";
 import { useData } from "../../../context/dataContext";
+import {useNavigate} from "react-router-dom"
 
 export interface loginProps {
   username: string;
   password: string;
 }
+
 
 function Login() {
   const [userData, setUserData] = useState<loginProps>({
@@ -18,11 +20,23 @@ function Login() {
     password: ""
   });
   const {loggedIn, setLoggedIn} = useData()
+  const navigate = useNavigate()
 
   useEffect(() => {
     setLoggedIn(false);
   }, [setLoggedIn]);
 
+  const handleSubmit = async () => {
+    try {
+      const res = loggedIn
+      if (loggedIn) {
+          navigate("/")
+        }
+    } catch(err){
+      console.log(err)
+    }
+  }
+  
   const login = async (data: loginProps) => {
     const loginResult = await axios.post("http://localhost:3500/api/connect", {
       params: {
@@ -36,7 +50,9 @@ function Login() {
       setLoggedIn(false);
       setUserData(previous => ({...previous, password: ""}))
     }
+    
   }
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     setUserData(previous => ({
@@ -63,7 +79,7 @@ function Login() {
           value={userData.password}
           onChange={handleChange}
         />
-        <Button type="submit" onClick={() => {login(userData)}}>Log in</Button>
+        <Button type="submit" onClick={() => {login(userData); () => handleSubmit()}}>Log in</Button>
         <Link to="/register">
           <Button variant="purple">Sign Up</Button>
         </Link>
