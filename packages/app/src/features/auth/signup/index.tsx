@@ -4,6 +4,8 @@ import AuthLayout from "../layout";
 import "./signup.css";
 import { useState } from "react";
 import axios from "axios"
+import useLoggedIn from "../useLoggedIn";
+
 export interface RegistrationProps {
     email: string;
     name: string;
@@ -13,6 +15,7 @@ export interface RegistrationProps {
 }
 
 function Registration() {
+  useLoggedIn();
   const [userData, setUserData] = useState<RegistrationProps>({
     email: "",
     name: "",

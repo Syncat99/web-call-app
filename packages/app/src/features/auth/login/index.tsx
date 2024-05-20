@@ -7,6 +7,7 @@ import "./login.css";
 import axios from "axios";
 import { useData } from "../../../context/dataContext";
 import {useNavigate} from "react-router-dom"
+import useLoggedIn from "../useLoggedIn";
 
 export interface loginProps {
   username: string;
@@ -15,16 +16,18 @@ export interface loginProps {
 
 
 function Login() {
+  const {loggedIn, setLoggedIn} = useData()
+  const navigate = useNavigate()
+  useLoggedIn()
   const [userData, setUserData] = useState<loginProps>({
     username: "",
     password: ""
   });
-  const {loggedIn, setLoggedIn} = useData()
-  const navigate = useNavigate()
 
-  useEffect(() => {
-    setLoggedIn(false);
-  }, [setLoggedIn]);
+
+  // useEffect(() => {
+  //   setLoggedIn(false); 
+  // }, [setLoggedIn]);
 
   const handleSubmit = async () => {
     try {
@@ -79,7 +82,7 @@ function Login() {
           value={userData.password}
           onChange={handleChange}
         />
-        <Button type="submit" onClick={() => {login(userData); () => handleSubmit()}}>Log in</Button>
+        <Button type="submit" onClick={() => {login(userData); handleSubmit()}}>Log in</Button>
         <Link to="/register">
           <Button variant="purple">Sign Up</Button>
         </Link>
