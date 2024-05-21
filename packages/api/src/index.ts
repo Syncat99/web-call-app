@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import cookieParser from "cookie-parser";
 import express from "express";
 import router from "@router";
