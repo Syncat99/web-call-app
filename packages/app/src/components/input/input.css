@@ -13,3 +13,10 @@
   color: white;
   opacity: 0.4; /* Firefox */
 }
+
+.chatInput {
+  border-radius: 0px;
+  background-color: initial;
+  width: 90%;
+  height: 100%;
+}

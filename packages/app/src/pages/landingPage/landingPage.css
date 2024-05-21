@@ -2,14 +2,9 @@
     background: linear-gradient(60deg, #5B84B1FF 55%, #FC766AFF 45%);
     background-attachment: fixed;
     height: 1080px;
-    padding: 0 10%;
+    
 }
 
-.main-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 25px 50px;
-}
 .main-body {
     padding: 200px 100px;
     display: flex;

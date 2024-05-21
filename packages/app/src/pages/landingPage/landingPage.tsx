@@ -1,25 +1,15 @@
 import { useState } from "react";
-import Button from "../../../components/button";
+import Button from "../../components/button";
 import "./landingPage.css";
 import { Link } from "react-router-dom";
-import { useData } from "../../../context/dataContext";
+import { useData } from "../../context/dataContext";
+import Navbar from "../../features/auth/navbar/navbar";
 
 function LandingPage() {
   const { loggedIn } = useData();
   return (
     <div className="main">
-      <div className="main-nav">
-        <div className="logo">LingoMingle</div>
-        {!loggedIn && (
-          <div className="main-nav-buttons">
-            <Button className="mnb-1">Contact</Button>
-            <Link to="/login">
-              <Button className="mnb-1">Login / Signup</Button>
-            </Link>
-          </div>
-        )}
-        {loggedIn && <Button className="mnb-1">Profile</Button>}
-      </div>
+      <Navbar />
       <div className="main-body">
         <div className="body-desc">
           <div className="important">Learn with Strangers</div>
