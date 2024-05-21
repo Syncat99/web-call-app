@@ -40,19 +40,23 @@ function Login() {
   };
 
   const login = async (data: loginProps) => {
-    const loginResult = await axios.post("http://localhost:3500/api/connect", {
-      params: {
-        username: data.username,
-        password: data.password,
-      },
-    },{
-       withCredentials:true
-    });
-    if (loginResult.data.success) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-      setUserData((previous) => ({ ...previous, password: "" }));
+    try {
+      const loginResult = await axios.post("http://localhost:3500/api/connect", {
+        params: {
+          username: data.username,
+          password: data.password,
+        },
+      },{
+        withCredentials:true,
+      });
+      if (loginResult.data.success) {
+        setLoggedIn(true)
+      }
+    }
+    catch (err) {
+      console.log(err)
+      setLoggedIn(false)
+      setUserData((previous) => ({ ...previous, password: "" }))
     }
   };
 

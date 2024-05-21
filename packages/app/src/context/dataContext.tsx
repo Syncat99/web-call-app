@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   createContext,
   useState,
@@ -22,7 +23,31 @@ export const useData = () => {
 };
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
+
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const result = await axios.post(
+          "http://localhost:3500/api/tokenCheck",
+          {},
+          {
+            withCredentials: true,
+          },
+        );
+        if (result.status === 200) {
+          setLoggedIn(true);
+        }
+      } catch (err) {
+        console.log(err);
+        setLoggedIn(false);
+      }
+    };
+
+    verifyToken();
+  }, []);
+
   return (
     <DataContext.Provider
       value={{

@@ -31,3 +31,10 @@
     padding: 10px 10px;
     height: initial;
 }
+.start {
+  color: white;
+  height: 50px;
+  width: 200px;
+  background-color: #FC766AFF;
+  font-size: 20px;
+}
