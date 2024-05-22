@@ -10,29 +10,29 @@ export interface RequestWithUser extends Request {
 export type PrivateRequestHandler = (
   req: RequestWithUser,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => any;
 
-export const assertPrivate = (handler: PrivateRequestHandler) => (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  //@ts-ignore
-  if (!req.user) {
-    return res.sendStatus(401);
-  }
+export const assertPrivate =
+  (handler: PrivateRequestHandler) =>
+  (req: Request, res: Response, next: NextFunction) => {
+    //@ts-ignore
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
 
-  return handler(req as RequestWithUser, res, next);
-};
+    return handler(req as RequestWithUser, res, next);
+  };
 
 export const authenticateToken: RequestHandler = (req, res, next) => {
   const token = req.cookies.authCookie;
+<<<<<<< HEAD
+=======
+  // console.log(req.cookies.authCookie);
+>>>>>>> 6093cf4e25d3320eca2eaf573e75115f2e5f713b
   if (!token) return res.sendStatus(401);
 
   jwt.verify(token, env.TOKEN_STRING, (err: any, user: any) => {
-    console.log("err", err);
-
     if (err) return res.sendStatus(403);
     (req as RequestWithUser).user = user;
 
@@ -47,7 +47,7 @@ export const sendToken = (res: Response, { id, username }: user) => {
       username,
     },
     process.env.TOKEN_STRING as string,
-    { expiresIn: "3600s" }
+    { expiresIn: "3600s" },
   );
   res.cookie("authCookie", token, {
     httpOnly: true,
