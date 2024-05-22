@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "sh ./run.sh npm run dev",
+    "dev": "concurrently \"peerjs --port 9000 --key peerjs --path /myapp\" \"sh ./run.sh npm run dev\"",
     "build": "sh ./run.sh npm run build",
     "start": "sh ./run.sh npm run start",
     "prettier": "npx prettier --write ."

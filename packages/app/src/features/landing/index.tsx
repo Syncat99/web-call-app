@@ -3,9 +3,13 @@ import { useData } from "../../context/dataContext";
 import "./landing.css";
 
 import { Link } from "react-router-dom";
+import SelectLanguage from "./language";
+import { useState } from "react";
 
 function LandingPage() {
   const { loggedIn } = useData();
+  const [language, setLanguage] = useState("french");
+
   return (
     <div className="main-body">
       <div className="body-desc">
@@ -17,9 +21,15 @@ function LandingPage() {
         <Link to="/register">
           {!loggedIn && <Button className="join">Join Now !</Button>}
         </Link>
-        <Link to="/choice">
-          {loggedIn && <Button className="start">Start !</Button>}
-        </Link>
+
+        {loggedIn && (
+          <>
+            <SelectLanguage value={language} setValue={setLanguage} />
+            <Link to={`/app?language=${language}`}>
+              <Button className="start">Start !</Button>
+            </Link>
+          </>
+        )}
       </div>
       <img
         className="main-img"

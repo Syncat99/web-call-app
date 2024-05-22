@@ -7,7 +7,6 @@ import MeetingSpace from "./features/meetingspace";
 import LandingPage from "./features/landing";
 import Login from "./features/auth/login";
 import Layout from "./components/layout";
-import LanguageChoice from "./features/meetingspace/choice";
 
 function App() {
   return (
@@ -18,7 +17,6 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />
-            <Route path="/choice" element={<LanguageChoice />} />
             <Route path="/app" element={<MeetingSpace />} />
           </Route>
         </Routes>

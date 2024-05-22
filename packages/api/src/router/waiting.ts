@@ -2,18 +2,37 @@ import { assertPrivate } from "@auth";
 import { getWaiting } from "@lib/waiting";
 import { Router } from "express";
 
-const waitingRouter = Router()
+const waitingRouter = Router();
 
-waitingRouter.post("/waiting", assertPrivate((req,res,next)=>{
+waitingRouter.post(
+  "/join",
+  assertPrivate((req, res, next) => {
     const { language, peerId } = req.body;
-    const { id:userId } = req.user;
+    const { id: userId } = req.user;
+    
+    const peer = getWaiting().addUser({ userId, language, peerId });
+    if (!peer)
+      return res.status(200).json({
+        status: "waiting",
+      });
 
-    const peer = getWaiting().addUser({userId,language,peerId});
-    if(!peer) return res.status(200).json({
-        status:"waiting"
-    });
+    return res.status(200).json({ status: "success", peer });
+  })
+);
 
-    return res.status(200).json({ status:"success", peer });
-}));
+waitingRouter.get(
+  "/status",
+  assertPrivate((req, res) => {
+    const { id: userId } = req.user;
+    const peer = getWaiting().getUser(userId);
+
+    if (!peer)
+      return res
+        .status(404)
+        .json({ status: "error", message: "User not found" });
+
+    return res.status(200).json(peer);
+  })
+);
 
 export default waitingRouter;

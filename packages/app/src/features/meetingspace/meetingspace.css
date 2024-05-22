@@ -1,39 +1,66 @@
 .meetingSpace {
-    display: flex;
-    gap: 50px;
-    width: fit-content;
-    margin: 5% auto;
-    justify-content: space-evenly;
-
+  display: flex;
+  gap: 50px;
+  width: fit-content;
+  margin: 5% auto;
+  justify-content: space-evenly;
 }
 
 .videoCall {
-    width: 800px;
-    height: 500px;
-    background-color: rgba(0, 0, 0, 0.850);
+  position: relative;
+  background-color: rgba(0, 0, 0);
+
+  width: 500px;
+  height: 500px;
+
+  z-index: 100;
+}
+
+.currentUserCall {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background-color: rgba(0, 0, 0);
+}
+
+.currentUserCall > video {
+  width: 100%;
+  height: 100%;
 }
 
 .chatroom {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 400px;
-    
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
 }
 .chatMessages {
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.850);
-
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
 }
 
 .chatroomInput {
-    display: flex;
-    align-items: center;
-    height: 12%;
-    background-color: rgba(0, 0, 0, 0.486);
-
-
+  display: flex;
+  align-items: center;
+  height: 12%;
+  background-color: rgba(0, 0, 0, 0.486);
 }
 .chatroom svg {
-    margin: auto;
+  margin: auto;
+}
+
+.chatMessages {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 5px;
+}
+
+.chatMessage {
+  padding: 5px 10px;
+  border-radius: 10px;
+  color: white;
+  margin: 0px;
 }

@@ -2,6 +2,7 @@ import { authenticateToken, sendToken } from "@auth";
 import { prisma } from "@lib/db";
 import { Router } from "express";
 import bcrypt from "bcrypt";
+import waitingRouter from "./waiting";
 
 const router = Router();
 
@@ -38,7 +39,7 @@ router.post("/connect", async (req, res) => {
   try {
     const userConnect = await prisma.user.findUnique({
       where: {
-        username: username,
+        username,
       },
     });
     if (!userConnect) {
@@ -66,28 +67,30 @@ router.post("/connect", async (req, res) => {
   }
 });
 
-router.post("/newRoom", async (req, res) => {
-  const { user1ID, user2ID } = req.body;
-  const user_1 = await prisma.user.findUnique({ where: { id: user1ID } });
-  const user_2 = await prisma.user.findUnique({ where: { id: user2ID } });
-  try {
-    const room = await prisma.room.create({
-      data: {
-        participants: {
-          connect: [{ id: user1ID }, { id: user2ID }],
-        },
-        messages: { create: [] },
-      },
-    });
-    res.status(201).json({ success: true, room });
-  } catch (error) {
-    console.error("Error creating room:", error);
-    res.status(500).json({ success: false, error: "Could not create room" });
-  }
-});
+// router.post("/newRoom", async (req, res) => {
+//   const { user1ID, user2ID } = req.body;
+//   const user_1 = await prisma.user.findUnique({ where: { id: user1ID } });
+//   const user_2 = await prisma.user.findUnique({ where: { id: user2ID } });
+//   try {
+//     const room = await prisma.room.create({
+//       data: {
+//         participants: {
+//           connect: [{ id: user1ID }, { id: user2ID }],
+//         },
+//         messages: { create: [] },
+//       },
+//     });
+//     res.status(201).json({ success: true, room });
+//   } catch (error) {
+//     console.error("Error creating room:", error);
+//     res.status(500).json({ success: false, error: "Could not create room" });
+//   }
+// });
 
 router.post("/tokenCheck", authenticateToken, (req, res) => {
   res.sendStatus(200);
 });
+
+router.use("/waiting", authenticateToken, waitingRouter);
 
 export default router;

@@ -22,19 +22,36 @@ model user {
   password String
   isAdmin  Boolean @default(false)
 
-  room   room?   @relation(fields: [roomId], references: [id])
-  roomId String?
+  messages message[]
+  sessions participant[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  message   message[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model participant {
+  id String @id @default(cuid())
+
+  peerId String?
+  isBot  Boolean @default(false)
+
+  user   user   @relation(fields: [userId], references: [id])
+  userId String
+
+  room   room   @relation(fields: [roomId], references: [id])
+  roomId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model room {
   id String @id @default(cuid())
 
-  participants user[]
+  language String
+
   messages     message[]
+  participants participant[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
