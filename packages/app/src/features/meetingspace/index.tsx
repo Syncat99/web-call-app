@@ -1,4 +1,4 @@
-import "./call.css";
+import "./meetingspace.css";
 
 import Input from "../../components/input";
 import { Send } from "lucide-react";
