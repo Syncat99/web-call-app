@@ -26,10 +26,7 @@ export const assertPrivate =
 
 export const authenticateToken: RequestHandler = (req, res, next) => {
   const token = req.cookies.authCookie;
-<<<<<<< HEAD
-=======
   // console.log(req.cookies.authCookie);
->>>>>>> 6093cf4e25d3320eca2eaf573e75115f2e5f713b
   if (!token) return res.sendStatus(401);
 
   jwt.verify(token, env.TOKEN_STRING, (err: any, user: any) => {

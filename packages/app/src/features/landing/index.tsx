@@ -17,7 +17,7 @@ function LandingPage() {
         <Link to="/register">
           {!loggedIn && <Button className="join">Join Now !</Button>}
         </Link>
-        <Link to="/app">
+        <Link to="/choice">
           {loggedIn && <Button className="start">Start !</Button>}
         </Link>
       </div>

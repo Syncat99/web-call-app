@@ -1,0 +1,20 @@
+.languageMenu {
+    display: flex;
+    width: fit-content;
+    margin: auto;
+    justify-content: center;
+    
+}
+
+#languages {
+    font-size: 1.2em;
+    color: white;
+    padding: 20px;
+    width: 200px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: rgba(97, 97, 97, 0.134);
+    outline: none;
+    border: none;
+}
+

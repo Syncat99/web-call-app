@@ -8,7 +8,6 @@ const router = Router();
 router.post("/createUser", async (req, res) => {
   const { email, name, username, password } = req.body;
 
-
   const hashed = await bcrypt.hash(password, 7);
 
   try {
@@ -66,6 +65,7 @@ router.post("/connect", async (req, res) => {
     res.status(400).send("user not found");
   }
 });
+
 router.post("/newRoom", async (req, res) => {
   const { user1ID, user2ID } = req.body;
   const user_1 = await prisma.user.findUnique({ where: { id: user1ID } });
