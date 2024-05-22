@@ -8,7 +8,6 @@ const router = Router();
 router.post("/createUser", async (req, res) => {
   const { email, name, username, password } = req.body;
 
-  console.log(req.body);
 
   const hashed = await bcrypt.hash(password, 7);
 

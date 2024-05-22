@@ -1,24 +1,27 @@
-import { DataProvider } from "./context/dataContext";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LandingPage from "./pages/landingPage/landingPage";
-import Registration from "./features/auth/signup";
-import Login from "./features/auth/login";
 import "./App.css";
-import MainApp from "./pages/app/mainApp";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { DataProvider } from "./context/dataContext";
+import Registration from "./features/auth/signup";
+import LandingPage from "./features/landing";
+import Login from "./features/auth/login";
+import Layout from "./components/layout";
+import CallPage from "./features/call";
+
 function App() {
   return (
-    <div className="app">
-      <DataProvider>
-        <BrowserRouter>
-          <Routes>
+    <DataProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route Component={Layout}>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />
-            <Route path="/app" element={<MainApp />} />
-          </Routes>
-        </BrowserRouter>
-      </DataProvider>
-    </div>
+            <Route path="/app" element={<CallPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </DataProvider>
   );
 }
 

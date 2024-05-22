@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Input from "../../../components/input";
 import Button from "../../../components/button";
 import AuthLayout from "../layout";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./login.css";
 import axios from "axios";
 import { useData } from "../../../context/dataContext";
@@ -18,7 +18,7 @@ function Login() {
   const { loggedIn, setLoggedIn } = useData();
   const navigate = useNavigate();
   useLoggedIn();
-  
+
   const [userData, setUserData] = useState<loginProps>({
     username: "",
     password: "",
@@ -41,22 +41,25 @@ function Login() {
 
   const login = async (data: loginProps) => {
     try {
-      const loginResult = await axios.post("http://localhost:3500/api/connect", {
-        params: {
-          username: data.username,
-          password: data.password,
+      const loginResult = await axios.post(
+        "http://localhost:3500/api/connect",
+        {
+          params: {
+            username: data.username,
+            password: data.password,
+          },
         },
-      },{
-        withCredentials:true,
-      });
+        {
+          withCredentials: true,
+        },
+      );
       if (loginResult.data.success) {
-        setLoggedIn(true)
+        setLoggedIn(true);
       }
-    }
-    catch (err) {
-      console.log(err)
-      setLoggedIn(false)
-      setUserData((previous) => ({ ...previous, password: "" }))
+    } catch (err) {
+      console.log(err);
+      setLoggedIn(false);
+      setUserData((previous) => ({ ...previous, password: "" }));
     }
   };
 

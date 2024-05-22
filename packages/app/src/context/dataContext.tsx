@@ -8,22 +8,19 @@ import {
   SetStateAction,
 } from "react";
 
-export interface dataProps {
+export interface DataProps {
   loggedIn: boolean;
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
 }
 
-const DataContext = createContext<dataProps>({
+const DataContext = createContext<DataProps>({
   loggedIn: false,
   setLoggedIn() {},
 });
 
-export const useData = () => {
-  return useContext(DataContext);
-};
+export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
-
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {

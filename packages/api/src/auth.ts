@@ -28,16 +28,13 @@ export const assertPrivate = (handler: PrivateRequestHandler) => (
 
 export const authenticateToken: RequestHandler = (req, res, next) => {
   const token = req.cookies.authCookie;
-  console.log(req.cookies.authCookie);
   if (!token) return res.sendStatus(401);
 
   jwt.verify(token, env.TOKEN_STRING, (err: any, user: any) => {
     console.log("err", err);
 
     if (err) return res.sendStatus(403);
-
-    //@ts-ignore
-    req.user = user;
+    (req as RequestWithUser).user = user;
 
     next();
   });
