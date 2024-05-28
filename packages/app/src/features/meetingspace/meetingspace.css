@@ -9,11 +9,14 @@
 .videoCall {
   position: relative;
   background-color: rgba(0, 0, 0);
-
   width: 500px;
   height: 500px;
-
   z-index: 100;
+}
+
+.videoCall > video {
+  object-fit: contain;
+  max-width: 100%;
 }
 
 .currentUserCall {

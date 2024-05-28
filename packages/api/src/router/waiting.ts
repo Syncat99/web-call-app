@@ -9,10 +9,12 @@ waitingRouter.post(
   assertPrivate((req, res, next) => {
     const { language, peerId } = req.body;
     const { id: userId } = req.user;
-    
+
     const peer = getWaiting().addUser({ userId, language, peerId });
+    console.log("found when adding", peer);
+
     if (!peer)
-      return res.status(200).json({
+      res.status(200).json({
         status: "waiting",
       });
 
@@ -30,6 +32,8 @@ waitingRouter.get(
       return res
         .status(404)
         .json({ status: "error", message: "User not found" });
+
+    console.log("status checked", peer);
 
     return res.status(200).json(peer);
   })

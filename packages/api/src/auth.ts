@@ -45,7 +45,7 @@ export const sendToken = (res: Response, { id, username }: user) => {
       username,
     },
     process.env.TOKEN_STRING as string,
-    { expiresIn: "3600d" }
+    { expiresIn: "30d" }
   );
   res.cookie("authCookie", token, {
     httpOnly: true,

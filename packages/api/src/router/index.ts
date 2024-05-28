@@ -1,4 +1,4 @@
-import { authenticateToken, sendToken } from "@auth";
+import { assertPrivate, authenticateToken, sendToken } from "@auth";
 import { prisma } from "@lib/db";
 import { Router } from "express";
 import bcrypt from "bcrypt";
@@ -87,9 +87,13 @@ router.post("/connect", async (req, res) => {
 //   }
 // });
 
-router.post("/tokenCheck", authenticateToken, (req, res) => {
-  res.sendStatus(200);
-});
+router.post(
+  "/tokenCheck",
+  authenticateToken,
+  assertPrivate((req, res) => {
+    res.status(200).json(req.user);
+  })
+);
 
 router.use("/waiting", authenticateToken, waitingRouter);
 

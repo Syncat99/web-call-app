@@ -11,17 +11,20 @@ import {
 export interface DataProps {
   loggedIn: boolean;
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
+  data: any | null;
 }
 
 const DataContext = createContext<DataProps>({
   loggedIn: false,
   setLoggedIn() {},
+  data: null,
 });
 
 export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [data, setData] = useState<null | any>(null);
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -35,6 +38,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         );
         if (result.status === 200) {
           setLoggedIn(true);
+          setData(result.data);
         }
       } catch (err) {
         console.log(err);
@@ -50,6 +54,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         loggedIn,
         setLoggedIn,
+        data,
       }}
     >
       {children}
