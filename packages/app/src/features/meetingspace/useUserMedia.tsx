@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export function useUserMedia() {
   const [stream, setMediaStream] = useState<MediaStream | null>(null);

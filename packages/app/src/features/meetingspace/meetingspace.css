@@ -6,6 +6,12 @@
   justify-content: space-evenly;
 }
 
+.videoCallContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2;
+}
+
 .videoCall {
   position: relative;
   background-color: rgba(0, 0, 0);

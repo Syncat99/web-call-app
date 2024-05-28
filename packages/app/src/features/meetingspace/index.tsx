@@ -1,14 +1,14 @@
 import "./meetingspace.css";
 
-import Input from "../../components/input";
-import { Send } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import PeerJs from "peerjs";
-import { useUserMedia } from "./useUserMedia";
-import Button from "../../components/button";
-import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useData } from "../../context/dataContext";
+import { useEffect, useRef, useState } from "react";
+import { useUserMedia } from "./useUserMedia";
+import Button from "../../components/button";
+import Input from "../../components/input";
+import { Send } from "lucide-react";
+import PeerJs from "peerjs";
+import axios from "axios";
 
 const api = axios.create({
   baseURL: "http://localhost:3500/api/waiting",
@@ -28,11 +28,11 @@ function MeetingSpace() {
   const calleeRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (callerRef.current && stream) {
+    if (callerRef.current && !!stream) {
       callerRef.current.srcObject = stream;
       callerRef.current.play();
     }
-  }, [callerRef.current, stream]);
+  }, [callerRef.current, !!stream]);
 
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<string[]>([]);
@@ -42,6 +42,8 @@ function MeetingSpace() {
   const { data } = useData();
 
   const peerId = data?.id;
+  const [peer, setPeer] = useState<PeerJs | null>(null);
+  const [conn, setConn] = useState<any | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -70,44 +72,39 @@ function MeetingSpace() {
   };
 
   const handleSend = async () => {
-    if (!remotePeerId || !message) return;
-
-    const peer = new PeerJs(peerId, {
-      host: "localhost",
-      port: 9000,
-      path: "/myapp",
-    });
-
-    const conn = peer.connect(remotePeerId);
-
-    console.log("sending", message);
+    if (!message) return;
     conn.send(message);
-
     setMessage("");
   };
 
   useEffect(() => {
     console.log(remotePeerId);
     if (!remotePeerId || !stream || !data) return;
+    if (peer) peer.destroy();
 
-    const peer = new PeerJs(peerId, {
+    const newPeer = new PeerJs(peerId, {
       host: "localhost",
       port: 9000,
       path: "/myapp",
+      config: { iceServers: [{ url: "stun:stun.l.google.com:19302" }] },
     });
 
-    const conn = peer.connect(remotePeerId);
+    const conn = newPeer.connect(remotePeerId);
 
-    conn.on("data", (data: string) => {
-      console.log("Received", data);
-      setMessages((prev) => [...prev, data]);
-    });
+    setPeer(newPeer);
+    setConn(conn);
+
     conn.on("open", () => {
       console.log("connection open");
       conn.send("hello");
     });
 
-    peer
+    conn.on("data", (data: string) => {
+      console.log("Received", data);
+      setMessages((prev) => [...prev, data]);
+    });
+
+    newPeer
       .call(remotePeerId, stream, { metadata: { peerId } })
       .on("stream", (remoteStream) => {
         if (calleeRef.current) {
@@ -117,12 +114,12 @@ function MeetingSpace() {
         }
       });
 
-    peer.on("call", (call) => {
-      call.answer(stream);
+    newPeer.on("call", (call) => {
+      if (call.peer === remotePeerId) call.answer(stream);
     });
 
     return () => {
-      peer.destroy();
+      newPeer.destroy();
     };
   }, [remotePeerId, peerId, stream, data]);
 
@@ -143,11 +140,13 @@ function MeetingSpace() {
 
   return (
     <div className="meetingSpace">
-      <div className="videoCall">
-        <video ref={calleeRef}></video>
+      <div className="videoCallContainer">
+        <div className="videoCall">
+          <video ref={calleeRef}></video>
 
-        <div className="currentUserCall">
-          <video ref={callerRef}></video>
+          <div className="currentUserCall">
+            <video ref={callerRef}></video>
+          </div>
         </div>
         <Button onClick={handleConnect}>Connect with camera</Button>
       </div>
