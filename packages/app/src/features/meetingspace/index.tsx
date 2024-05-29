@@ -35,7 +35,13 @@ function MeetingSpace() {
   }, [callerRef.current, !!stream]);
 
   const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState([
+    { message: "Hello world", isSender: false },
+    {
+      message: "Hello world",
+      isSender: true,
+    },
+  ]);
   const [remotePeerId, setRemotePeerId] = useState<string | null>(null);
   const [checkingStatus, setCheckingStatus] = useState(false);
 
@@ -51,10 +57,15 @@ function MeetingSpace() {
   };
 
   const mapMessages = () =>
-    messages.map((message, index) => (
-      <p className="chatMessage" key={index}>
-        {message}
-      </p>
+    messages.map(({ message, isSender }, index) => (
+      <div>
+        <p
+          className={`chatMessage ${isSender && "chatMessage-sender"}`}
+          key={index}
+        >
+          {`<${isSender ? "You" : "Remote"}>`} {message}
+        </p>
+      </div>
     ));
 
   const handleCheckStatus = async () => {
@@ -73,7 +84,8 @@ function MeetingSpace() {
 
   const handleSend = async () => {
     if (!message) return;
-    conn.send(message);
+    // conn.send(message);
+    setMessages((prev) => [...prev, { message, isSender: true }]);
     setMessage("");
   };
 
@@ -99,10 +111,10 @@ function MeetingSpace() {
       conn.send("hello");
     });
 
-    conn.on("data", (data: string) => {
-      console.log("Received", data);
-      setMessages((prev) => [...prev, data]);
-    });
+    // conn.on("data", (data: string) => {
+    //   console.log("Received", data);
+    //   setMessages((prev) => [...prev, data]);
+    // });
 
     newPeer
       .call(remotePeerId, stream, { metadata: { peerId } })

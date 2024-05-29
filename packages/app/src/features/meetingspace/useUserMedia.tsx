@@ -12,15 +12,6 @@ export function useUserMedia() {
     } catch (err) {
       console.error(err);
     }
-
-    // if (!stream) {
-    // } else {
-    //   return function cleanup() {
-    //     stream.getTracks().forEach((track) => {
-    //       track.stop();
-    //     });
-    //   };
-    // }
   }
 
   return { stream, enableStream };
